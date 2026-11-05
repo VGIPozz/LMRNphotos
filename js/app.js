@@ -8,7 +8,7 @@
   const selected = new Set(); // keys "catId::optionName"
   const key = (cat, opt) => cat.id + "::" + opt.name;
 
-  const FIELD_IDS = { site: "f-site", siteId: "f-siteid", address: "f-address", tech: "f-tech", date: "f-date" };
+  const FIELD_IDS = { site: "f-site", siteId: "f-siteid", date: "f-date" };
 
   /* ---------- persistence (per-browser convenience only) ---------- */
   function save() {

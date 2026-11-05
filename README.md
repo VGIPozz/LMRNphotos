@@ -6,7 +6,7 @@ A small web app that builds a **fillable PDF photo checklist** for a site, based
 2. Pick the site configuration: **Mount Type, Antenna Type, Secondary Antenna Type, Grounding Type, Equipment Type** (more than one can be picked in each group).
 3. Click **Generate fillable PDF**.
 
-The PDF always includes the **General** items (column G of the spreadsheet), followed by one section for each option picked. Every item has a **Done** checkbox, an **N/A** checkbox and a **Notes** field, and the PDF ends with a general-notes box and sign-off fields.
+The PDF always includes the **General** items (column G of the spreadsheet), followed by one section for each option picked. Every item has a **Done** checkbox, an **N/A** checkbox and a **Notes** field, and the PDF ends with a general-notes box.
 
 It is a plain static site (HTML/CSS/JavaScript) – no server, no build step, no internet connection needed once loaded. The PDF is created in the browser with [pdf-lib](https://pdf-lib.js.org/), which is included in `vendor/`.
 
@@ -57,9 +57,9 @@ vendor/pdf-lib.min.js    pdf-lib 1.17.1 (MIT licence)
 
 Fields are named predictably, in case the filled PDFs are ever processed automatically:
 
-- Header: `Site_Name`, `Site_ID`, `Address`, `Technician`, `Date`
+- Header: `Site_Name`, `Site_ID`, `Date`
 - Items: `S<section#>_<Section_Name>_I<item#>_Done` / `_NA` / `_Notes` – e.g. `S02_Collared_Wall_Mount_I03_Done`
-- Sign-off: `General_Notes`, `Completed_By`, `Signature`, `Date_Completed`
+- End: `General_Notes`
 
 ## Notes
 

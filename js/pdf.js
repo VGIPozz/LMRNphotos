@@ -21,13 +21,13 @@
   const PAD = 5;          // vertical padding inside a row
 
   const C = {
-    ink: rgb(0.11, 0.15, 0.2),
-    muted: rgb(0.38, 0.42, 0.48),
-    accent: rgb(0.12, 0.37, 0.6),
-    band: rgb(0.9, 0.94, 0.97),
-    line: rgb(0.8, 0.84, 0.88),
+    ink: rgb(0.141, 0.141, 0.141),       // brand charcoal #242424
+    muted: rgb(0.43, 0.41, 0.38),
+    accent: rgb(0.561, 0.451, 0.294),    // brand gold #8f734b
+    band: rgb(0.957, 0.937, 0.906),      // light gold tint
+    line: rgb(0.85, 0.83, 0.79),
     white: rgb(1, 1, 1),
-    field: rgb(0.97, 0.98, 1),
+    field: rgb(0.988, 0.98, 0.965),
   };
 
   // Helvetica only supports WinAnsi; replace anything it can't encode.
@@ -117,14 +117,12 @@
       text(label, x, y, { f: bold, size: 8, color: C.muted });
       textField(name, x, y - 22, w, 18, value, { size: 10 });
     };
-    const half = (CONTENT_W - 12) / 2;
-    labelField("SITE NAME", "Site_Name", M, half, info.site);
-    labelField("SITE ID / JOB #", "Site_ID", M + half + 12, half, info.siteId);
-    y -= 34;
-    labelField("ADDRESS", "Address", M, CONTENT_W, info.address);
-    y -= 34;
-    labelField("TECHNICIAN", "Technician", M, half, info.tech);
-    labelField("DATE", "Date", M + half + 12, half, info.date);
+    const wDate = 120;
+    const wName = (CONTENT_W - wDate - 24) * 0.6;
+    const wId = CONTENT_W - wDate - 24 - wName;
+    labelField("SITE NAME", "Site_Name", M, wName, info.site);
+    labelField("SITE ID / JOB #", "Site_ID", M + wName + 12, wId, info.siteId);
+    labelField("DATE", "Date", M + wName + wId + 24, wDate, info.date);
     y -= 40;
 
     // Configuration summary (static text – reflects what was picked in the app)
@@ -186,7 +184,7 @@
         if (ensure(rowH)) sectionBand(sec, true);
 
         const top = y;
-        if (ii % 2 === 1) page.drawRectangle({ x: M, y: top - rowH, width: CONTENT_W, height: rowH, color: rgb(0.985, 0.988, 0.992) });
+        if (ii % 2 === 1) page.drawRectangle({ x: M, y: top - rowH, width: CONTENT_W, height: rowH, color: rgb(0.99, 0.985, 0.975) });
         text(String(ii + 1), M + 4, top - PAD - FS + 1, { size: 8, color: C.muted });
         lines.forEach((ln, i) => text(ln, M + COL_NUM, top - PAD - FS + 1 - i * LH));
 
@@ -205,20 +203,11 @@
       y -= 14;
     });
 
-    /* ---------------- Sign-off ---------------- */
-    ensure(190);
+    /* ---------------- General notes ---------------- */
+    ensure(120);
     text("GENERAL NOTES", M, y, { f: bold, size: 8, color: C.muted });
     textField("General_Notes", M, y - 96, CONTENT_W, 90, "", { multiline: true, size: 9 });
     y -= 116;
-    const third = (CONTENT_W - 24) / 3;
-    const so = (label, name, x, w, val) => {
-      text(label, x, y, { f: bold, size: 8, color: C.muted });
-      textField(name, x, y - 24, w, 20, val, { size: 10 });
-    };
-    so("COMPLETED BY", "Completed_By", M, third, info.tech);
-    so("SIGNATURE", "Signature", M + third + 12, third, "");
-    so("DATE COMPLETED", "Date_Completed", M + 2 * (third + 12), third, "");
-    y -= 34;
 
     /* ---------------- Footers ---------------- */
     const footLeft = safe(font, ["Site Photo Checklist", info.siteId || info.site].filter(Boolean).join("  |  "));
