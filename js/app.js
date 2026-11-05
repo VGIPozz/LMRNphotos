@@ -137,10 +137,10 @@
       const blob = new Blob([bytes], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
-      // File name: "<Site name> <date created>.pdf"
-      const siteName = info.site.replace(/[\\/:*?"<>|]+/g, "-").replace(/\s+/g, " ").trim() || "Photo Checklist";
+      // File name: "<Site ID> <date created>.pdf"
+      const siteId = info.siteId.replace(/[\\/:*?"<>|]+/g, "-").replace(/\s+/g, " ").trim() || "Photo Checklist";
       a.href = url;
-      a.download = siteName + " " + todayLocal() + ".pdf";
+      a.download = siteId + " " + todayLocal() + ".pdf";
       document.body.appendChild(a);
       a.click();
       a.remove();

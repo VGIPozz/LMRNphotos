@@ -64,5 +64,5 @@ Fields are named predictably, in case the filled PDFs are ever processed automat
 ## Notes
 
 - Selections and site details are remembered in the browser (local storage) for convenience. **Start new form** (top right) clears everything; **Clear selections** resets only the picks.
-- The downloaded PDF is named `<Site name> <date created>.pdf`, e.g. `Test Site Alpha 2026-11-05.pdf` (or `Photo Checklist <date>.pdf` if no site name is entered).
+- The downloaded PDF is named `<Site ID> <date created>.pdf`, e.g. `JOB-1234 2026-11-05.pdf` (or `Photo Checklist <date>.pdf` if no site ID is entered).
 - Photo capture is intentionally not included yet.
