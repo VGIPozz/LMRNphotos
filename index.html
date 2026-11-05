@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Site Photo Checklist Builder</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <h1>Site Photo Checklist Builder</h1>
+      <p class="sub">Pick the site configuration, then generate a fillable PDF checklist.</p>
+    </div>
+  </header>
+
+  <main class="wrap layout">
+    <section class="panel" aria-labelledby="site-h">
+      <h2 id="site-h"><span class="step">1</span> Site details <span class="hint">(optional – can also be filled in on the PDF)</span></h2>
+      <div class="grid fields">
+        <label>Site name<input id="f-site" type="text" autocomplete="off"></label>
+        <label>Site ID / Job #<input id="f-siteid" type="text" autocomplete="off"></label>
+        <label class="span2">Address<input id="f-address" type="text" autocomplete="off"></label>
+        <label>Technician<input id="f-tech" type="text" autocomplete="off"></label>
+        <label>Date<input id="f-date" type="date"></label>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="cfg-h">
+      <h2 id="cfg-h"><span class="step">2</span> Site configuration</h2>
+      <div id="categories"></div>
+    </section>
+
+    <section class="panel summary" aria-labelledby="sum-h">
+      <h2 id="sum-h"><span class="step">3</span> Checklist preview</h2>
+      <p id="count" class="count"></p>
+      <div id="preview"></div>
+      <div class="actions">
+        <button id="btn-pdf" class="primary" type="button">Generate fillable PDF</button>
+        <button id="btn-reset" class="ghost" type="button">Clear selections</button>
+      </div>
+      <p id="status" class="status" role="status"></p>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    Checklist items are generated from <code>data/Photo_Checklist_Build_Out.xlsx</code>.
+  </footer>
+
+  <script src="vendor/pdf-lib.min.js"></script>
+  <script src="js/checklist-data.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
