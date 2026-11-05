@@ -137,9 +137,10 @@
       const blob = new Blob([bytes], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
-      const base = (info.siteId || info.site || "Site").replace(/[^\w\-]+/g, "_").replace(/^_+|_+$/g, "") || "Site";
+      // File name: "<Site name> <date created>.pdf"
+      const siteName = info.site.replace(/[\\/:*?"<>|]+/g, "-").replace(/\s+/g, " ").trim() || "Photo Checklist";
       a.href = url;
-      a.download = "Photo_Checklist_" + base + (info.date ? "_" + info.date : "") + ".pdf";
+      a.download = siteName + " " + todayLocal() + ".pdf";
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -153,6 +154,26 @@
     }
   }
 
+  function todayLocal() {
+    const d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+
+  function onNewForm() {
+    const hasData = selected.size > 0 || $("f-site").value.trim() || $("f-siteid").value.trim();
+    if (hasData && !window.confirm("Start a new form? This clears the site details and all selections.")) return;
+    selected.clear();
+    $("f-site").value = "";
+    $("f-siteid").value = "";
+    $("f-date").value = todayLocal();
+    try { localStorage.removeItem(STORE_KEY); } catch (_) { /* ignore */ }
+    renderCategories();
+    renderPreview();
+    $("status").textContent = "New form started.";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    $("f-site").focus();
+  }
+
   function onReset() {
     selected.clear();
     renderCategories();
@@ -162,10 +183,8 @@
 
   /* ---------- init ---------- */
   load();
-  if (!$("f-date").value) {
-    const d = new Date();
-    $("f-date").value = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-  }
+  if (!$("f-date").value) $("f-date").value = todayLocal();
+  $("btn-new").addEventListener("click", onNewForm);
   Object.values(FIELD_IDS).forEach((id) => $(id).addEventListener("input", save));
   $("btn-pdf").addEventListener("click", onGenerate);
   $("btn-reset").addEventListener("click", onReset);
